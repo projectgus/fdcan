@@ -398,6 +398,38 @@ where
             .modify(|r, w| unsafe { w.bits(r.bits() & !interrupts.bits()) })
     }
 
+    /// Enables Interrupt::TxComplete for a set of mailboxes
+    #[inline]
+    pub fn enable_transmission_interrupts(&mut self, mailboxes: Mailboxes) {
+        self.registers()
+            .txbtie
+            .modify(|r, w| unsafe { w.bits(r.bits() | mailboxes.bits()) })
+    }
+
+    /// Disables Interrupt::TxComplete for a set of mailboxes
+    #[inline]
+    pub fn disable_transmission_interrupts(&mut self, mailboxes: Mailboxes) {
+        self.registers()
+            .txbtie
+            .modify(|r, w| unsafe { w.bits(r.bits() & !mailboxes.bits()) })
+    }
+
+    /// Enables Interrupt::TxCancel for a set of mailboxes
+    #[inline]
+    pub fn enable_tx_cancel_interrupts(&mut self, mailboxes: Mailboxes) {
+        self.registers()
+            .txbcie
+            .modify(|r, w| unsafe { w.bits(r.bits() | mailboxes.bits()) })
+    }
+
+    /// Disables Interrupt::TxCancel for a set of mailboxes
+    #[inline]
+    pub fn disable_tx_cancel_interrupts(&mut self, mailboxes: Mailboxes) {
+        self.registers()
+            .txbcie
+            .modify(|r, w| unsafe { w.bits(r.bits() & !mailboxes.bits()) })
+    }
+
     /// Retrieve the CAN error counters
     #[inline]
     pub fn error_counters(&self) -> ErrorCounters {
@@ -1647,5 +1679,14 @@ impl From<Mailbox> for usize {
     #[inline]
     fn from(m: Mailbox) -> Self {
         m as u8 as usize
+    }
+}
+
+bitflags::bitflags! {
+    /// A set of mailboxes
+    pub struct Mailboxes: u32 {
+        const _0 = 1 << 0;
+        const _1 = 1 << 1;
+        const _2 = 1 << 2;
     }
 }
