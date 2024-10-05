@@ -14,7 +14,7 @@
 //!
 //! | Feature | Description |
 //! |---------|-------------|
-//! | `embedded-can-03` | ~Implements the [`embedded-can`] 0.3 traits.~ |
+//! | `embedded_can` | ~Uses [`embedded-can`] 0.4 CAN ID types instead of internal ones.~ |
 //!
 //! [`embedded-can`]: https://docs.rs/embedded-can
 

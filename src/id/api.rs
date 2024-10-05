@@ -40,7 +40,6 @@ impl StandardId {
         self.0
     }
 }
-
 /// Extended 29-bit CAN Identifier (`0..=1FFF_FFFF`).
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub struct ExtendedId(u32);
